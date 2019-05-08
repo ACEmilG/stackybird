@@ -12,19 +12,33 @@ function eventLoopIteration() {
   $.ajax({
     url: "/send_move",
     data: {
+      move: $('#move').val()
     }
+    success: handleMoved,
   })
+
   // Grab new data
   $.ajax({
     url: "/get_graph",
-    success: function(result) {
-      handleGetData(result);
-    }
+    success: handleData,
   });
-  // Update screen
+
   // Check for alert
+  $.ajax({
+    url: "/notification",
+    success: handleNotification
+  })
 }
 
 function handleGetData(result) {
   console.log("handling get data result");
+  // Update screen
+}
+
+function handleWriteMove(result) {
+  console.log("handling successful write");
+}
+
+function handleNotification(result) {
+  console.log("handling notification")
 }
