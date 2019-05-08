@@ -1,6 +1,9 @@
 import pprint
 from server import utils
-from urllib.parse import parse_qs
+try:
+  from urllib import parse_qs
+except ImportError:
+  from urlparse import parse_qs
 
 
 def hello_handler(environ, start_fn):
