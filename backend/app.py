@@ -1,14 +1,20 @@
+import pprint
+
 from flask import Flask
 from flask import jsonify
 from flask import request
-
-import pprint
+from server import monitoring
 
 app = Flask(__name__)
+
+metric_client = monitoring.create_monitoring_client()
+project = 'stackathon-2019'
 
 @app.route('/hello')
 def hello_handler():
   name = request.args.get('name', 'world')
+  value = float(request.args.get('v', '0.5'))
+  monitoring.add_point(metric_client, project, value)
   return 'hello, %s\nThis is stackybird' % name
 
 @app.route('/')
