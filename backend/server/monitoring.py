@@ -36,4 +36,4 @@ def get_points(client, project):
       'metric.type = "custom.googleapis.com/stackathon/stackybird/bird"',
       interval,
       monitoring_v3.enums.ListTimeSeriesRequest.TimeSeriesView.FULL)
-  return MessageToJson(result)
+  return MessageToJson(results)
