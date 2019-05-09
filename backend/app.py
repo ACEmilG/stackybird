@@ -8,14 +8,15 @@ app = Flask(__name__)
 
 @app.route('/hello')
 def hello_handler():
-  return 'hello world'
+  name = request.args.get('name', 'world')
+  return 'hello, %s\nThis is stackybird' % name
 
 @app.route('/')
 def home_handler():
   return 'this is home'
 
-@app.route('/test', methods = ['POST'])
-def post_test_handler():
+@app.route('/test', methods = [ 'GET', 'POST'])
+def test_handler():
   pprint.pprint(request.data)
   return jsonify({'test':'output'})
 
@@ -30,5 +31,3 @@ def get_graph():
 @app.route('/notification', methods = ['GET'])
 def notification():
   return 'not implemented'
-
-
