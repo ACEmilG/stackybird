@@ -24,11 +24,26 @@
     </style>
   </head>
   <body>
-    <div class="flex-container">
-      <div>Gameplay graph <canvas width="65%", height="33%" id="canvas"></canvas></div>
-      <div>Controller <input type="text" id="move"></div>
-      <div>Alert / Notification</div>
+    <div class="flex-container" id="container">
+      <div><canvas width="500px", height="500px" id="canvas"></canvas></div>
+
+      <div>
+	<input type="radio" id="move_up"
+	 name="move" value="move_up">
+	<label for="move_up">Up</label>
+
+	<input type="radio" id="move_none"
+	 name="move" value="move_none">
+	<label for="move_none">None</label>
+
+	<input type="radio" id="move_down"
+	 name="move" value="move_down">
+	<label for="move_down">Down</label>
+      </div>
+
+      <div id='notification'>Alert / Notification</div>
     </div>
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="gameplay.js"></script>
 </html>

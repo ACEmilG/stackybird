@@ -3,9 +3,10 @@ import pprint
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import send_from_directory
 from server import monitoring
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 metric_client = monitoring.create_monitoring_client()
 project = 'stackathon-2019'
@@ -32,12 +33,17 @@ def send_move():
 
 @app.route('/get_points', methods = ['GET'])
 def get_points():
-  return jsonify(monitoring.get_points(metric_client,project))
-
-@app.route('/get_graph', methods = ['GET'])
-def get_graph():
-  return 'not implemented'
+  res = monitoring.get_points(metric_client,project)
+  pprint.pprint(res)
+  print(res)
+  return jsonify(res)
 
 @app.route('/notification', methods = ['GET'])
 def notification():
-  return 'not implemented'
+  return jsonify(alerts=[])
+
+@app.route('/ace/<path:path>')
+def send_js(path):
+  print("path: " + path)
+  return send_from_directory('/usr/local/google/home/acemil/hackathon/stackybird/ace/', path)
+
