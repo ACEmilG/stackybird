@@ -29,13 +29,13 @@ def test_handler():
 
 @app.route('/send_move', methods = ['POST'])
 def send_move():
-  return 'not implemented'
+  monitoring.add_point(metric_client, project, float(request.form["move"]))
+  return ''
 
 @app.route('/get_points', methods = ['GET'])
 def get_points():
   res = monitoring.get_points(metric_client,project)
   pprint.pprint(res)
-  print(res)
   return jsonify(res)
 
 @app.route('/notification', methods = ['GET'])
@@ -44,6 +44,5 @@ def notification():
 
 @app.route('/ace/<path:path>')
 def send_js(path):
-  print("path: " + path)
   return send_from_directory('/usr/local/google/home/acemil/hackathon/stackybird/ace/', path)
 

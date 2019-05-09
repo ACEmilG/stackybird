@@ -28,13 +28,12 @@ function eventLoopIteration() {
 }
 
 function sendMove() {
-  move = 0;
+  var move = 0.0;
   if ($('#move_up').val()) {
-    move = 1;
+    move = 1.0;
   } else if ($('#move_down').val()) {
-    move = -1;
+    move = -1.0;
   }
-  console.log("posting: " + move);
   $.post({
     url: "/send_move",
     data: {
