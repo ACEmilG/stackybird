@@ -58,5 +58,13 @@ function handleWriteMove(result) {
 }
 
 function handleNotification(result) {
-  console.log("handling notification")
+  console.log("handling notification");
+  if (result.alerts.length() > 0) {
+    $('#container').css('background-color', '#f012be');
+    $('#notification').text('LOSE');
+  } else {
+    $('#container').css('background-color', '#001f3f');
+    $('#notification').text('');
+  }
+
 }
