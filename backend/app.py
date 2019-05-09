@@ -30,6 +30,10 @@ def test_handler():
 def send_move():
   return 'not implemented'
 
+@app.route('/get_points', methods = ['GET'])
+def get_points():
+  return jsonify(monitoring.get_points(metric_client,project))
+
 @app.route('/get_graph', methods = ['GET'])
 def get_graph():
   return 'not implemented'
