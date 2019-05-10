@@ -60,11 +60,11 @@ function handleData(result) {
   var y_offset = 0;
   for (i in result) {
     var stream = JSON.parse(result[i]);
-    var y = stream.points[0].value.doubleValue * canvas.height;
+    var y = stream.points[stream.points.length - 1].value.doubleValue * canvas.height;
     context.beginPath();
     context.moveTo(0,y);
-    for (var j = 1; j < stream.points.length; j++) {
-      var x = j * point_width;
+    for (var j = stream.points.length - 2; j >= 0; j--) {
+      var x = (stream.points.length - 1 - j) * point_width;
       y = stream.points[j].value.doubleValue * canvas.height;
       console.log("x: " + x + ", y: " + y);
       context.lineTo(x, y);
