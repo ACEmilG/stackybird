@@ -34,10 +34,11 @@ function sendMove() {
   } else if ($('#move_down').val()) {
     move = -0.1;
   }
+  current_position = current_position + move;
   $.post({
     url: "/send_move",
     data: {
-      move: move
+      move: current_position,
     },
     success: handleMoved,
   })
