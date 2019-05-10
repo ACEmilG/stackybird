@@ -31,12 +31,15 @@ function eventLoopIteration() {
 
 function sendMove() {
   var move = 0.0;
-  if ($('#move_up').val()) {
+  var moved_name = $("input[name=move]").filter(":checked").val()
+  if (moved_name == "move_up") {
     move = 0.1;
-  } else if ($('#move_down').val()) {
+  } else if (moved_name == "move_down") {
     move = -0.1;
   }
+  console.log("move: " + move);
   current_position = current_position + move;
+  console.log("new position: " + current_position);
   $.post({
     url: "/send_move",
     data: {
@@ -60,6 +63,7 @@ function handleData(result) {
   var y_offset = 0;
   for (i in result) {
     var stream = JSON.parse(result[i]);
+    console.log(stream.points);
     var y = stream.points[stream.points.length - 1].value.doubleValue * canvas.height;
     context.beginPath();
     context.moveTo(0,y);
@@ -67,6 +71,7 @@ function handleData(result) {
       var x = (stream.points.length - 1 - j) * point_width;
       y = stream.points[j].value.doubleValue * canvas.height;
       console.log("x: " + x + ", y: " + y);
+      console.log("original y: " + stream.points[j].value.doubleValue);
       context.lineTo(x, y);
     }
     context.stroke();
