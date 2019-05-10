@@ -69,7 +69,6 @@ function handleData(result) {
   var canvas = document.querySelector("canvas");
   context.strokeStyle = "red";
   context.lineWidth = 5;
-  var y_offset = 0;
   for (i in result) {
     var stream = JSON.parse(result[i]);
     console.log(stream.points);
@@ -78,13 +77,15 @@ function handleData(result) {
     context.moveTo(0,y);
     for (var j = stream.points.length - 2; j >= 0; j--) {
       var x = (stream.points.length - 1 - j) * point_width;
-      y = stream.points[j].value.doubleValue * canvas.height;
+      var scaler = walls[0][j] - walls[1][j];
+      var offset = walls[1][j];
+      y = (stream.points[j].value.doubleValue * scaler) + offset;
+      console.log("scaler: " + scaler + ", offset: " + offset);
       console.log("x: " + x + ", y: " + y);
       console.log("original y: " + stream.points[j].value.doubleValue);
       context.lineTo(x, y);
     }
     context.stroke();
-    y_offset = y_offset + 1;
   }
 }
 
