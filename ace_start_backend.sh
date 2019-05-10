@@ -17,6 +17,5 @@ export GOOGLE_APPLICATION_CREDENTIALS
 port=${1:-8080}
 workers=${2:-1}
 
-cd backend
 export FLASK_APP=app.py
 flask run
