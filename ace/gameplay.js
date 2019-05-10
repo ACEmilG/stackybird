@@ -30,9 +30,9 @@ function eventLoopIteration() {
 function sendMove() {
   var move = 0.0;
   if ($('#move_up').val()) {
-    move = 1.0;
+    move = 0.1;
   } else if ($('#move_down').val()) {
-    move = -1.0;
+    move = -0.1;
   }
   $.post({
     url: "/send_move",
@@ -50,26 +50,23 @@ function handleData(result) {
   // Update screen
   var canvas = document.querySelector("canvas");
   var context = canvas.getContext("2d");
-  context.strokeStyle = "blue";
+  context.strokeStyle = "red";
   context.lineWidth = 5;
   context.fillStyle = "#111111";
   context.fillRect(0,0, canvas.width, canvas.height);
   var y_offset = 0;
   for (i in result) {
     var stream = JSON.parse(result[i]);
-    console.log("looking at stream: ");
-    console.log(stream);
-    console.log(stream.points.length);
-    var previous_y = stream.points[0].value.doubleValue * canvas.height;
+    var y = stream.points[0].value.doubleValue * canvas.height;
+    context.beginPath();
+    context.moveTo(0,y);
     for (var j = 1; j < stream.points.length; j++) {
-      var start_x = j * point_width;
-      var start_y = previous_y;
-      var width = point_width;
-      var height = stream.points[j].value.doubleValue * canvas.height;
-      console.log("rectangle: " + start_x + ", " + start_y + ", " + width + ", " + y_offset);
-      context.strokeRect(start_x, start_y, width, height + y_offset);
-      previous_y = start_y;
+      var x = j * point_width;
+      y = stream.points[j].value.doubleValue * canvas.height;
+      console.log("x: " + x + ", y: " + y);
+      context.lineTo(x, y);
     }
+    context.stroke();
     y_offset = y_offset + 1;
   }
 }
