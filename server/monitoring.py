@@ -29,7 +29,7 @@ def get_points(client, project):
   interval.end_time.seconds = int(now)
   interval.end_time.nanos = int(
       (now - interval.end_time.seconds) * 10**9)
-  interval.start_time.seconds = int(now - 10000)
+  interval.start_time.seconds = int(now - 60)
   interval.start_time.nanos = interval.end_time.nanos
   results = client.list_time_series(
       project_name,
