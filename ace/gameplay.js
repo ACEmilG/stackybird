@@ -105,8 +105,24 @@ function handleNotification(result) {
 }
 
 function updateWalls() {
-  //TODO update info
+  shiftWalls();
   drawWalls();
+}
+
+function shiftWalls() {
+  var canvas = document.querySelector("canvas");
+  walls[0].shift();
+  walls[1].shift();
+  var top_change = (Math.random() * 40) - 20;
+  var bot_change = (Math.random() * 40) - 20;
+  if (walls[0][walls[0].length - 1] + top_change > canvas.height) {
+    top_change = top_change * -1;
+  }
+  if (walls[1][walls[1].length - 1] + bot_change < 0) {
+    bot_change = bot_change * -1;
+  }
+  walls[0].push(walls[0][walls[0].length - 1] + top_change);
+  walls[1].push(walls[1][walls[1].length - 1] + bot_change);
 }
 
 function drawWalls() {
@@ -136,9 +152,13 @@ function drawWalls() {
 function initWalls() {
   var canvas = document.querySelector("canvas");
   var num_points = Math.ceil(canvas.width / point_width);
+
   for (var i = 0; i < num_points; i++) {
-    var offset = Math.random() * 5;
-    walls[0].push(canvas.height - 10 - offset);
-    walls[1].push(10 - offset);
+    walls[0].push(canvas.height - 100);
+    walls[1].push(100);
+  }
+
+  for (var i = 0; i < num_points; i++) {
+    shiftWalls();
   }
 }
