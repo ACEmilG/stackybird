@@ -9,6 +9,8 @@ setInterval(function() {
   eventLoopIteration();
 }, 6000)
 
+eventLoopIteration();
+
 function eventLoopIteration() {
   console.log("starting event loop iteration");
   // Write move result
