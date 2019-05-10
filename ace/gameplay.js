@@ -2,7 +2,12 @@
  * @fileoverview Description of this file.
  */
 
-var current_position = 0;
+var current_position = 0.5;
+var context;
+var point_width = 5;
+var walls = [[], []];
+
+initWalls();
 
 setInterval(function() {
   console.log("Executing");
@@ -11,10 +16,18 @@ setInterval(function() {
 
 eventLoopIteration();
 
+
 function eventLoopIteration() {
+  var canvas = document.querySelector("canvas");
+  context = canvas.getContext("2d");
+  context.fillStyle = "#111111";
+  context.fillRect(0,0, canvas.width, canvas.height);
+
   console.log("starting event loop iteration");
   // Write move result
   sendMove();
+
+  updateWalls();
 
   // Grab new data
   $.ajax({
@@ -50,16 +63,12 @@ function sendMove() {
 }
 
 function handleData(result) {
-  var point_width = 5;
   console.log("handling get data result");
   console.log(result);
   // Update screen
   var canvas = document.querySelector("canvas");
-  var context = canvas.getContext("2d");
   context.strokeStyle = "red";
   context.lineWidth = 5;
-  context.fillStyle = "#111111";
-  context.fillRect(0,0, canvas.width, canvas.height);
   var y_offset = 0;
   for (i in result) {
     var stream = JSON.parse(result[i]);
@@ -91,5 +100,43 @@ function handleNotification(result) {
   } else {
     $('#container').css('background-color', '#001f3f');
     $('#notification').text('');
+  }
+}
+
+function updateWalls() {
+  //TODO update info
+  drawWalls();
+}
+
+function drawWalls() {
+  var canvas = document.querySelector("canvas");
+  context.strokeStyle = "white";
+  context.lineWidth = 5;
+  var num_points = Math.ceil(canvas.width / point_width);
+
+  context.beginPath();
+  context.moveTo(0, walls[0][0]);
+  for(var i = 1; i < walls[0].length; i++) {
+    var x = i * point_width;
+    context.lineTo(x, walls[0][i]);
+  }
+  context.stroke();
+
+  context.beginPath();
+  context.moveTo(0, walls[1][0]);
+  for(var i = 1; i < walls[1].length; i++) {
+    var x = i * point_width;
+    context.lineTo(x, walls[1][i]);
+  }
+  context.stroke();
+
+}
+
+function initWalls() {
+  var canvas = document.querySelector("canvas");
+  var num_points = Math.ceil(canvas.width / point_width);
+  for (var i = 0; i < num_points; i++) {
+    walls[0].push(canvas.height - 10);
+    walls[1].push(10);
   }
 }
