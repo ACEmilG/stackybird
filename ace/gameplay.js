@@ -46,9 +46,9 @@ function sendMove() {
   var move = 0.0;
   var moved_name = $("input[name=move]").filter(":checked").val()
   if (moved_name == "move_up") {
-    move = 0.1;
-  } else if (moved_name == "move_down") {
     move = -0.1;
+  } else if (moved_name == "move_down") {
+    move = 0.1;
   }
   console.log("move: " + move);
   current_position = current_position + move;
@@ -137,7 +137,8 @@ function initWalls() {
   var canvas = document.querySelector("canvas");
   var num_points = Math.ceil(canvas.width / point_width);
   for (var i = 0; i < num_points; i++) {
-    walls[0].push(canvas.height - 10);
-    walls[1].push(10);
+    var offset = Math.random() * 5;
+    walls[0].push(canvas.height - 10 - offset);
+    walls[1].push(10 - offset);
   }
 }
