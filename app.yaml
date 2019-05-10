@@ -1,0 +1,14 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+env_variables:
+  GOOGLE_APPLICATION_CREDENTIALS: 'stackathon-2019-1dabc3d38149.json'
+
+libraries:
+- name: ssl
+  version: latest
+
+handlers:
+- url: /.*
+  script: main.app

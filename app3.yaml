@@ -1,0 +1,5 @@
+runtime: python37
+entrypoint: gunicorn -b :$PORT main:app
+
+env_variables:
+  GOOGLE_APPLICATION_CREDENTIALS: 'stackathon-2019-1dabc3d38149.json'
