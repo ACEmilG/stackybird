@@ -8,17 +8,21 @@ def create_monitoring_client():
   return client
 
 def add_point(client, project, value):
-  project_name = client.project_path(project)
-  series = monitoring_v3.types.TimeSeries()
-  series.metric.type = 'custom.googleapis.com/stackathon/stackybird/bird'
-  series.resource.type = 'global'
-  point = series.points.add()
-  point.value.double_value = value
-  now = time.time()
-  point.interval.end_time.seconds = int(now)
-  point.interval.end_time.nanos = int(
-      (now - point.interval.end_time.seconds) * 10**9)
-  client.create_time_series(project_name, [series])
+  try:
+    project_name = client.project_path(project)
+    series = monitoring_v3.types.TimeSeries()
+    series.metric.type = 'custom.googleapis.com/stackathon/stackybird/bird'
+    series.resource.type = 'global'
+    point = series.points.add()
+    point.value.double_value = value
+    now = time.time()
+    point.interval.end_time.seconds = int(now)
+    point.interval.end_time.nanos = int(
+        (now - point.interval.end_time.seconds) * 10**9)
+    client.create_time_series(project_name, [series])
+  except Exception as e:
+    return 'error occured creating point: %s' % str(e)
+  return None
 
 def get_points(client, project):
   project_name = client.project_path(project)

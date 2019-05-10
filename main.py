@@ -15,7 +15,9 @@ project = 'google.com:stackybird'
 def hello_handler():
   name = request.args.get('name', 'world')
   value = float(request.args.get('v', '0.5'))
-  monitoring.add_point(metric_client, project, value)
+  ret = monitoring.add_point(metric_client, project, value)
+  if ret:
+    return ret
   return 'hello, %s\nThis is stackybird' % name
 
 @app.route('/')
@@ -28,18 +30,18 @@ def test_handler():
   return jsonify({'test':'output'})
 
 @app.route('/send_move', methods = ['POST'])
-def send_move():
+def send_move_handler():
   monitoring.add_point(metric_client, project, float(request.form["move"]))
   return ''
 
 @app.route('/get_points', methods = ['GET'])
-def get_points():
+def get_points_handler():
   res = monitoring.get_points(metric_client,project)
   pprint.pprint(res)
   return jsonify(res)
 
 @app.route('/notification', methods = ['GET'])
-def notification():
+def notification_handler():
   return jsonify(alerts=[])
 
 @app.route('/ace/<path:path>')
