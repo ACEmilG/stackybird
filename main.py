@@ -9,7 +9,7 @@ from server import monitoring
 app = Flask(__name__, static_url_path='')
 
 metric_client = monitoring.create_monitoring_client()
-project = 'stackathon-2019'
+project = 'google.com:stackybird'
 
 @app.route('/hello')
 def hello_handler():

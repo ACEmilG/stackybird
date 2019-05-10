@@ -2,7 +2,7 @@
 
 pip install -r requirements.txt
 
-GOOGLE_APPLICATION_CREDENTIALS="$(dirname $(realpath $0))/stackathon-2019-1dabc3d38149.json"
+GOOGLE_APPLICATION_CREDENTIALS="$(dirname $(realpath $0))/stackybird-6bd89869b28b.json"
 
 if [[ -f ${GOOGLE_APPLICATION_CREDENTIALS} ]] ; then
   echo "Using ${GOOGLE_APPLICATION_CREDENTIALS} credentials"

@@ -11,9 +11,7 @@ def add_point(client, project, value):
   project_name = client.project_path(project)
   series = monitoring_v3.types.TimeSeries()
   series.metric.type = 'custom.googleapis.com/stackathon/stackybird/bird'
-  series.resource.type = 'gce_instance'
-  series.resource.labels['instance_id'] = '4893175471367173624'
-  series.resource.labels['zone'] = 'us-east1-b'
+  series.resource.type = 'global'
   point = series.points.add()
   point.value.double_value = value
   now = time.time()
@@ -40,3 +38,4 @@ def get_points(client, project):
   for result in results:
     response.append(MessageToJson(result))
   return response
+
